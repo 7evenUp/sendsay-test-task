@@ -11,8 +11,8 @@ const Button = ({
     <button
       className={`flex items-center justify-center py-4 w-full
                   rounded-md border border-outline
-                text-black text-sm font-medium leading-[15px]
-                  ${isEqualsButton ? "py-6 bg-iris text-white" : ''}`}
+                  text-black text-sm font-medium leading-[15px]
+                  ${isEqualsButton ? "py-6 bg-iris text-white" : ""}`}
     >
       {children}
     </button>

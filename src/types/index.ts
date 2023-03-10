@@ -1,0 +1,1 @@
+export type calcNames = 'display' | 'operators' | 'numpad' | 'equal'

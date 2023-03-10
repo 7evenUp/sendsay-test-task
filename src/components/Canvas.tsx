@@ -1,20 +1,17 @@
-import { useState } from "react";
 import { useDrop } from "react-dnd";
-import { useSelector } from "react-redux";
 import { Drop } from "../icons";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { selectCalculator } from "../redux/selectors";
 import { remove } from "../redux/slice";
-import { RootState } from "../redux/store";
-import Button from "./Button";
 import Display from "./Display";
 import Equal from "./Equal";
 import Numpad from "./Numpad";
 import Operators from "./Operators";
 
 const Canvas = () => {
-  const calculator = useAppSelector((state: RootState) => state.calculator)
-  const dispatch = useAppDispatch()
-  
+  const calculator = useAppSelector(selectCalculator);
+  const dispatch = useAppDispatch();
+
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: "BOX",
     collect: (monitor) => ({
@@ -25,23 +22,28 @@ const Canvas = () => {
   return (
     <div
       ref={drop}
-      role={"Dustbin"}
       className={`h-[448px] rounded-md flex border-border-dashed border-dashed transition-all
-                ${!!calculator.length ? 'items-start' : 'items-center'}
-                ${!!calculator.length ? 'border-0' : 'border-2'}
+                ${!!calculator.length ? "items-start" : "items-center"}
+                ${!!calculator.length ? "border-0" : "border-2"}
                 ${canDrop && !calculator.length ? "bg-sky-50" : ""}`}
     >
       {!!calculator.length ? (
         <div className="flex flex-col w-full gap-3">
           {calculator.map((item) =>
             item === "display" ? (
-              <Display onDoubleClick={() => dispatch(remove('display'))} />
+              <Display
+                key={item}
+                onDoubleClick={() => dispatch(remove(item))}
+              />
             ) : item === "operators" ? (
-              <Operators onDoubleClick={() => dispatch(remove('operators'))} />
+              <Operators
+                key={item}
+                onDoubleClick={() => dispatch(remove(item))}
+              />
             ) : item === "numpad" ? (
-              <Numpad onDoubleClick={() => dispatch(remove('numpad'))} />
+              <Numpad key={item} onDoubleClick={() => dispatch(remove(item))} />
             ) : (
-              <Equal onDoubleClick={() => dispatch(remove('equal'))} />
+              <Equal key={item} onDoubleClick={() => dispatch(remove(item))} />
             )
           )}
         </div>
