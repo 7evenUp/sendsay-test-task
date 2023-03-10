@@ -1,18 +1,17 @@
 import { useState } from "react";
 import { useDrop } from "react-dnd";
+import { useSelector } from "react-redux";
 import { Drop } from "../icons";
+import { useAppSelector } from "../redux/hooks";
+import { RootState } from "../redux/store";
 import Button from "./Button";
 import Display from "./Display";
 import Numpad from "./Numpad";
 import Operators from "./Operators";
 
 const Canvas = () => {
-  const [items, setItems] = useState([
-    "display",
-    "numpad",
-    "operators",
-    "equal",
-  ]);
+  const calculator = useAppSelector((state: RootState) => state.calculator)
+  
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: "BOX",
     collect: (monitor) => ({
@@ -25,13 +24,13 @@ const Canvas = () => {
       ref={drop}
       role={"Dustbin"}
       className={`h-[448px] rounded-md flex border-border-dashed border-dashed transition-all
-                ${!!items.length ? 'items-start' : 'items-center'}
-                ${!!items.length ? 'border-0' : 'border-2'}
-                ${canDrop && !items.length ? "bg-sky-50" : ""}`}
+                ${!!calculator.length ? 'items-start' : 'items-center'}
+                ${!!calculator.length ? 'border-0' : 'border-2'}
+                ${canDrop && !calculator.length ? "bg-sky-50" : ""}`}
     >
-      {!!items.length ? (
+      {!!calculator.length ? (
         <div className="flex flex-col w-full gap-3">
-          {items.map((item) =>
+          {calculator.map((item) =>
             item === "display" ? (
               <Display />
             ) : item === "operators" ? (
