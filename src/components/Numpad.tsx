@@ -1,9 +1,9 @@
 import React from "react";
 import Button from "./Button";
 
-const Numpad = () => {
+const Numpad = ({ onDoubleClick }: { onDoubleClick?: () => void }) => {
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div onDoubleClick={onDoubleClick} className="grid grid-cols-3 gap-2">
       <Button>7</Button>
       <Button>8</Button>
       <Button>9</Button>

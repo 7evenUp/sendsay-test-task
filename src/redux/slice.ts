@@ -10,9 +10,12 @@ export const calculatorSlice = createSlice({
     add: (state, action: PayloadAction<string>) => {
       state.push(action.payload)
     },
+    remove: (state, action: PayloadAction<string>) => {
+      state.splice(state.indexOf(action.payload), 1)
+    }
   },
 })
 
-export const { add } = calculatorSlice.actions
+export const { add, remove } = calculatorSlice.actions
 
 export default calculatorSlice.reducer

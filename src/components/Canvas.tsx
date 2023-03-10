@@ -2,15 +2,18 @@ import { useState } from "react";
 import { useDrop } from "react-dnd";
 import { useSelector } from "react-redux";
 import { Drop } from "../icons";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { remove } from "../redux/slice";
 import { RootState } from "../redux/store";
 import Button from "./Button";
 import Display from "./Display";
+import Equal from "./Equal";
 import Numpad from "./Numpad";
 import Operators from "./Operators";
 
 const Canvas = () => {
   const calculator = useAppSelector((state: RootState) => state.calculator)
+  const dispatch = useAppDispatch()
   
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: "BOX",
@@ -32,13 +35,13 @@ const Canvas = () => {
         <div className="flex flex-col w-full gap-3">
           {calculator.map((item) =>
             item === "display" ? (
-              <Display />
+              <Display onDoubleClick={() => dispatch(remove('display'))} />
             ) : item === "operators" ? (
-              <Operators />
+              <Operators onDoubleClick={() => dispatch(remove('operators'))} />
             ) : item === "numpad" ? (
-              <Numpad />
+              <Numpad onDoubleClick={() => dispatch(remove('numpad'))} />
             ) : (
-              <Button isEqualsButton={true}>=</Button>
+              <Equal onDoubleClick={() => dispatch(remove('equal'))} />
             )
           )}
         </div>
