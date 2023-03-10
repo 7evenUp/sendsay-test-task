@@ -9,7 +9,8 @@ module.exports = {
       colors: {
         iris: '#5D5FEF',
         'gray-bg': '#F3F4F6',
-        outline: '#E2E3E5'
+        outline: '#E2E3E5',
+        display: '#111827'
       }
     },
   },
