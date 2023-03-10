@@ -10,7 +10,7 @@ function App() {
 
         </div>
         <div className="w-[243px] bg-emerald-300 relative">
-          <div className="absolute">
+          <div className="absolute w-full -top-[30px] left-0 -translate-y-full">
             <ToggleMode />
           </div>
         </div>
