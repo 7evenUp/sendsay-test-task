@@ -22,10 +22,14 @@ export const calculatorSlice = createSlice({
     remove: (state, action: PayloadAction<number>) => {
       let indexOfObj = state.findIndex((el) => el.id === action.payload)
       state.splice(indexOfObj, 1)
+    },
+    update: (state, action: PayloadAction<{index: number, atIndex: number, item: dragType}>) => {
+      console.log('IN SELECTOR UPDATE | ', 'from: ', action.payload.index, 'to: ', action.payload.atIndex)
+      state.splice(action.payload.atIndex,0,...state.splice(action.payload.index,1))
     }
   },
 })
 
-export const { add, remove } = calculatorSlice.actions
+export const { add, remove, update } = calculatorSlice.actions
 
 export default calculatorSlice.reducer

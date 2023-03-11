@@ -2,16 +2,42 @@ import { useDrop } from "react-dnd";
 import { Drop } from "../icons";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { selectCalculator } from "../redux/selectors";
-import { remove } from "../redux/slice";
+import { remove, update } from "../redux/slice";
 import Display from "./Display";
 import Equal from "./Equal";
 import Numpad from "./Numpad";
 import Operators from "./Operators";
-import DragCard from './DragCard'
+import DragCard from "./DragCard";
+import { useCallback } from "react";
+import { calcNames } from "../types";
 
 const Canvas = () => {
   const calculator = useAppSelector(selectCalculator);
   const dispatch = useAppDispatch();
+
+  const findCard = useCallback(
+    (name: calcNames) => {
+      console.log('FIND CARD | name: ', name)
+      const card = calculator.filter((c) => `${c.name}` === name)[0] as {
+        id: number;
+        name: calcNames;
+      };
+      return {
+        card,
+        index: calculator.findIndex((el) => el.name === name),
+      };
+    },
+    [calculator]
+  );
+
+  const moveCard = useCallback(
+    (name: calcNames, atIndex: number) => {
+      const { card, index } = findCard(name);
+      console.log("MOVE CARD | index: ", index, ' card: ', card)
+      dispatch(update({ index, atIndex, item: card }));
+    },
+    [findCard, calculator]
+  );
 
   const [{ canDrop, isOver, itemType }, drop] = useDrop(() => ({
     accept: ["BOX", "BOX_X"],
@@ -33,7 +59,13 @@ const Canvas = () => {
       {!!calculator.length ? (
         <div className="flex flex-col w-full gap-3">
           {calculator.map((item) => (
-            <DragCard key={item.id} onDoubleClick={() => dispatch(remove(item.id))}>
+            <DragCard
+              name={item.name}
+              key={item.id}
+              moveCard={moveCard}
+              findCard={findCard}
+              onDoubleClick={() => dispatch(remove(item.id))}
+            >
               {item.name === "display" ? (
                 <Display />
               ) : item.name === "operators" ? (

@@ -1,70 +1,58 @@
-import type { CSSProperties, FC } from 'react'
+import type { FC } from 'react'
 import { memo } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-
-const style: CSSProperties = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move',
-}
+import { calcNames } from '../types'
 
 export interface CardProps {
-  id: string
+  name: calcNames
   children: React.ReactNode
   onDoubleClick: () => void,
-  moveCard: (id: string, to: number) => void
-  findCard: (id: string) => { index: number }
+  moveCard: (name: calcNames, to: number) => void
+  findCard: (name: calcNames) => { index: number }
 }
 
 interface Item {
-  id: string
+  name: calcNames
   originalIndex: number
 }
 
 export const DragCard: FC<CardProps> = memo(function Card({
-  id,
+  name,
   children,
   onDoubleClick,
-  // moveCard,
-  // findCard,
+  moveCard,
+  findCard,
 }) {
-  // const originalIndex = findCard(id).index
-  // const [{ isDragging }, drag] = useDrag(
-  //   () => ({
-  //     type: 'BOX_X',
-  //     item: { id, originalIndex },
-  //     collect: (monitor) => ({
-  //       isDragging: monitor.isDragging(),
-  //     }),
-  //     end: (item, monitor) => {
-  //       const { id: droppedId, originalIndex } = item
-  //       const didDrop = monitor.didDrop()
-  //       if (!didDrop) {
-  //         moveCard(droppedId, originalIndex)
-  //       }
-  //     },
-  //   }),
-  //   [id, originalIndex, moveCard],
-  // )
+  const originalIndex = findCard(name).index
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: 'BOX_X',
+      item: { name, originalIndex },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
+    }),
+    [name, originalIndex, moveCard],
+  )
 
-  // const [, drop] = useDrop(
-  //   () => ({
-  //     accept: 'BOX',
-  //     hover({ id: draggedId }: Item) {
-  //       if (draggedId !== id) {
-  //         const { index: overIndex } = findCard(id)
-  //         moveCard(draggedId, overIndex)
-  //       }
-  //     },
-  //   }),
-  //   [findCard, moveCard],
-  // )
+  const [, drop] = useDrop(
+    () => ({
+      accept: 'BOX_X',
+      hover: (item: Item, monitor) => {
+        console.log('=============================')
+        // console.log(monitor.)
+        console.log('=============================')
+        const { index: overIndex } = findCard(name)
+        moveCard(item.name, overIndex)
+      },
+    }),
+    [findCard, moveCard],
+  )
 
-  // const opacity = isDragging ? 0 : 1
+  const opacity = isDragging ? 0 : 1
   return (
-    <div  style={{ ...style }} onDoubleClick={onDoubleClick}>
+    <div className='border border-dashed cursor-move'
+    ref={(node) => drag(drop(node))} style={{ opacity }} onDoubleClick={onDoubleClick}>
       {children}
     </div>
   )
