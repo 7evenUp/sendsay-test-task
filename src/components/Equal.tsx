@@ -1,8 +1,8 @@
 import Button from "./Button";
 
-const Equal = ({ onDoubleClick }: { onDoubleClick?: () => void }) => {
+const Equal = () => {
   return (
-    <div onDoubleClick={onDoubleClick}>
+    <div>
       <Button isEqualsButton={true}>=</Button>
     </div>
   );

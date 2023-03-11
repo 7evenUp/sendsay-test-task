@@ -12,13 +12,15 @@ const Canvas = () => {
   const calculator = useAppSelector(selectCalculator);
   const dispatch = useAppDispatch();
 
-  const [{ canDrop, isOver }, drop] = useDrop(() => ({
-    accept: "BOX",
+  const [{ canDrop, isOver, itemType }, drop] = useDrop(() => ({
+    accept: ["BOX", "BOX_X"],
     collect: (monitor) => ({
       isOver: monitor.isOver(),
+      itemType: monitor.getItemType(),
       canDrop: monitor.canDrop(),
     }),
   }));
+
   return (
     <div
       ref={drop}
@@ -29,23 +31,19 @@ const Canvas = () => {
     >
       {!!calculator.length ? (
         <div className="flex flex-col w-full gap-3">
-          {calculator.map((item) =>
-            item === "display" ? (
-              <Display
-                key={item}
-                onDoubleClick={() => dispatch(remove(item))}
-              />
-            ) : item === "operators" ? (
-              <Operators
-                key={item}
-                onDoubleClick={() => dispatch(remove(item))}
-              />
-            ) : item === "numpad" ? (
-              <Numpad key={item} onDoubleClick={() => dispatch(remove(item))} />
-            ) : (
-              <Equal key={item} onDoubleClick={() => dispatch(remove(item))} />
-            )
-          )}
+          {calculator.map((item) => (
+            <div key={item} onDoubleClick={() => dispatch(remove(item))}>
+              {item === "display" ? (
+                <Display />
+              ) : item === "operators" ? (
+                <Operators />
+              ) : item === "numpad" ? (
+                <Numpad />
+              ) : (
+                <Equal />
+              )}
+            </div>
+          ))}
         </div>
       ) : (
         <div className="flex flex-col items-center w-full">

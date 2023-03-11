@@ -1,8 +1,8 @@
 import Button from "./Button";
 
-const Operators = ({ onDoubleClick }: { onDoubleClick?: () => void }) => {
+const Operators = () => {
   return (
-    <div onDoubleClick={onDoubleClick} className="flex gap-2">
+    <div className="flex gap-2">
       <Button>/</Button>
       <Button>х</Button>
       <Button>-</Button>
