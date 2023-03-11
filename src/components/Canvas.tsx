@@ -1,8 +1,8 @@
 import { useDrop } from "react-dnd";
 import { Drop } from "../icons";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { selectCalculator } from "../redux/selectors";
-import { remove, update } from "../redux/slice";
+import { selectCalculator } from "../redux/calculator/selectors";
+import { remove, update } from "../redux/calculator/slice";
 import Display from "./Display";
 import Equal from "./Equal";
 import Numpad from "./Numpad";

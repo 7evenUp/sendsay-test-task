@@ -1,6 +1,6 @@
-import { RootState } from "./store";
+import { RootState } from "../store";
 import { createSelector } from 'reselect'
-import { calcNames } from "../types";
+import { calcNames } from "../../types";
 
 export const selectCalculator = (state: RootState) => state.calculator
 

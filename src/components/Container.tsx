@@ -1,8 +1,8 @@
 import React from "react";
 import { useDrag } from "react-dnd";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { selectIsItemInCalculator } from "../redux/selectors";
-import { add } from "../redux/slice";
+import { selectIsItemInCalculator } from "../redux/calculator/selectors";
+import { add } from "../redux/calculator/slice";
 import { RootState } from "../redux/store";
 import { calcNames } from "../types";
 

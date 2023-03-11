@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { calcNames } from '../types'
+import { calcNames } from '../../types'
 
 export type dragType = {
   id: number,
