@@ -7,6 +7,6 @@ export const selectCalculator = (state: RootState) => state.calculator
 export const selectIsItemInCalculator = createSelector(
   [selectCalculator, (_, name: calcNames) => name],
   (calculator, name) => {
-    return calculator.includes(name)
+    return calculator.find((el => el.name === name))
   }
 )

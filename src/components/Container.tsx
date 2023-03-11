@@ -1,7 +1,9 @@
 import React from "react";
 import { useDrag } from "react-dnd";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { selectIsItemInCalculator } from "../redux/selectors";
 import { add } from "../redux/slice";
+import { RootState } from "../redux/store";
 import { calcNames } from "../types";
 
 interface DropResult {
@@ -10,21 +12,22 @@ interface DropResult {
 
 const Container = ({
   children,
+  id,
   name,
-  disabled,
 }: {
   children: React.ReactNode;
+  id: number,
   name: calcNames;
-  disabled: boolean;
 }) => {
+  const disabled = useAppSelector((state: RootState) => selectIsItemInCalculator(state, name))
   const dispatch = useAppDispatch();
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: "BOX",
-    item: { name },
+    item: { id, name },
     end: (draggedItem, monitor) => {
       const dropResult = monitor.getDropResult<DropResult>();
       if (draggedItem && dropResult) {
-        dispatch(add(draggedItem.name));
+        dispatch(add({id: draggedItem.id, name: draggedItem.name}));
         console.log(`You dropped ${draggedItem.name} into ${dropResult.name}!`);
       }
     },

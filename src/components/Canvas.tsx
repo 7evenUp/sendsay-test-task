@@ -7,6 +7,7 @@ import Display from "./Display";
 import Equal from "./Equal";
 import Numpad from "./Numpad";
 import Operators from "./Operators";
+import DragCard from './DragCard'
 
 const Canvas = () => {
   const calculator = useAppSelector(selectCalculator);
@@ -32,17 +33,17 @@ const Canvas = () => {
       {!!calculator.length ? (
         <div className="flex flex-col w-full gap-3">
           {calculator.map((item) => (
-            <div key={item} onDoubleClick={() => dispatch(remove(item))}>
-              {item === "display" ? (
+            <DragCard key={item.id} onDoubleClick={() => dispatch(remove(item.id))}>
+              {item.name === "display" ? (
                 <Display />
-              ) : item === "operators" ? (
+              ) : item.name === "operators" ? (
                 <Operators />
-              ) : item === "numpad" ? (
+              ) : item.name === "numpad" ? (
                 <Numpad />
               ) : (
                 <Equal />
               )}
-            </div>
+            </DragCard>
           ))}
         </div>
       ) : (

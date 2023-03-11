@@ -7,28 +7,25 @@ import {
   Operators,
   ToggleMode,
 } from "./components";
-import { useAppSelector } from "./redux/hooks";
-import { selectCalculator } from "./redux/selectors";
 
 function App() {
-  const calculator = useAppSelector(selectCalculator);
   return (
     <div className="w-screen h-screen flex items-center justify-center overflow-x-hidden">
       <div className="w-[695px] h-[640px] flex items-center px-20 gap-[52px]">
         <div className="w-[240px] flex flex-col gap-3">
-          <Container name="display" disabled={calculator.includes("display")}>
+          <Container id={1} name="display">
             <Display />
           </Container>
           <Container
+            id={2}
             name="operators"
-            disabled={calculator.includes("operators")}
           >
             <Operators />
           </Container>
-          <Container name="numpad" disabled={calculator.includes("numpad")}>
+          <Container id={3} name="numpad">
             <Numpad />
           </Container>
-          <Container name="equal" disabled={calculator.includes("equal")}>
+          <Container id={4} name="equal">
             <Equal />
           </Container>
         </div>
