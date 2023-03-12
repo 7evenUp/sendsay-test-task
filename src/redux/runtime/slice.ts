@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+const MAX_DISPLAY_SYMBOLS = 15
+
 export type RuntimeType = {
   display: string
   expression: string
@@ -9,7 +11,7 @@ export type RuntimeType = {
 const initialState: RuntimeType = {
   display: '0',
   expression: '',
-  opClicked: false
+  opClicked: false,
 }
 
 export const runtimeSlice = createSlice({
@@ -17,10 +19,11 @@ export const runtimeSlice = createSlice({
   initialState,
   reducers: {
     addToDisplay: (state, action: PayloadAction<string>) => {
-      const isComma = action.payload === ','
       const isEmpty = state.display === '0'
 
-      if (isComma) {
+      if (state.display.length >= MAX_DISPLAY_SYMBOLS) return
+
+      if (action.payload === ',') {
         if (isEmpty) state.display = '0.'
         else if (state.display.includes('.')) return
         else state.display += '.'
@@ -28,7 +31,6 @@ export const runtimeSlice = createSlice({
         if (isEmpty || state.opClicked) state.display = action.payload
         else state.display += action.payload
       }
-
       state.opClicked = false
     },
     addExpression: (state, action: PayloadAction<string>) => {
@@ -37,13 +39,14 @@ export const runtimeSlice = createSlice({
       state.opClicked = true
     },
     calculate: (state) => {
+      if (state.display === '0' && state.expression === '') return
       if (state.expression.at(-1) === '/' && state.display === '0') {
         state.display = 'Не определено'
         state.expression = '0'
-        state.opClicked = true
       } else {
-        state.display = eval(state.expression + state.display)
+        state.display = '' + eval(state.expression + state.display)
       }
+      state.opClicked = true
     },
     reset: (state) => {
       state.display = '0'

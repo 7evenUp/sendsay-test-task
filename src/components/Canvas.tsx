@@ -3,10 +3,7 @@ import { Drop } from "../icons";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { selectCalculator } from "../redux/calculator/selectors";
 import { remove, update } from "../redux/calculator/slice";
-import Display from "./Display";
-import Equal from "./Equal";
-import Numpad from "./Numpad";
-import Operators from "./Operators";
+import { Display, Equal, Numpad, Operators } from "./Calculator";
 import DragCard from "./DragCard";
 import { useCallback } from "react";
 import { calcNames } from "../types";
@@ -68,13 +65,17 @@ const Canvas = () => {
               {item.name === "display" ? (
                 <Display />
               ) : item.name === "operators" ? (
-                <Operators onClick={(evt) => {
-                  dispatch(addExpression(evt.currentTarget.innerText))
-                }} />
+                <Operators
+                  onClick={(evt) => {
+                    dispatch(addExpression(evt.currentTarget.innerText));
+                  }}
+                />
               ) : item.name === "numpad" ? (
-                <Numpad onClick={(evt) => {
-                  dispatch(addToDisplay(evt.currentTarget.innerText))
-                }} />
+                <Numpad
+                  onClick={(evt) => {
+                    dispatch(addToDisplay(evt.currentTarget.innerText));
+                  }}
+                />
               ) : (
                 <Equal />
               )}

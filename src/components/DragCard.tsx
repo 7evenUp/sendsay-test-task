@@ -60,7 +60,7 @@ export const DragCard: FC<CardProps> = memo(function Card({
   return (
     <div
       className="cursor-move"
-      ref={isConstructorMode ? (node) => drag(drop(node)) : () => {}}
+      ref={isConstructorMode ? (node) => drag(drop(node)) : null}
       style={{ opacity }}
       onDoubleClick={isConstructorMode ? onDoubleClick : () => {}}
     >
