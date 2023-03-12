@@ -28,7 +28,6 @@ const Container = ({
       const dropResult = monitor.getDropResult<DropResult>();
       if (draggedItem && dropResult) {
         dispatch(add({id: draggedItem.id, name: draggedItem.name}));
-        console.log(`You dropped ${draggedItem.name} into ${dropResult.name}!`);
       }
     },
     collect: (monitor) => ({
@@ -46,7 +45,7 @@ const Container = ({
                     : "shadow-md"
                 }`}
     >
-      <div role="Handle" ref={disabled ? null : drag}>
+      <div ref={disabled ? null : drag}>
         {children}
       </div>
     </div>

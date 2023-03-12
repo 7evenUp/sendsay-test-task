@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type RuntimeType = {
   display: string
-  result: string
   expression: string
+  opClicked: boolean // check if any of operators are clicked: [+ - * / =]
 }
 
 const initialState: RuntimeType = {
   display: '0',
-  result: '',
-  expression: ''
+  expression: '',
+  opClicked: false
 }
 
 export const runtimeSlice = createSlice({
@@ -25,29 +25,29 @@ export const runtimeSlice = createSlice({
         else if (state.display.includes('.')) return
         else state.display += '.'
       } else {
-        if (isEmpty) state.display = action.payload
+        if (isEmpty || state.opClicked) state.display = action.payload
         else state.display += action.payload
       }
+
+      state.opClicked = false
     },
     addExpression: (state, action: PayloadAction<string>) => {
       const op = action.payload === 'x' ? '*' : action.payload
       state.expression = state.display + op
-      state.display = '0'
-      console.log(state.expression)
+      state.opClicked = true
     },
     calculate: (state) => {
       if (state.expression.at(-1) === '/' && state.display === '0') {
         state.display = 'Не определено'
         state.expression = '0'
+        state.opClicked = true
       } else {
-        console.log('Expression: ', state.expression)
-        console.log('Display: ', state.display)
         state.display = eval(state.expression + state.display)
-        console.log('Display after eval: ', state.display)
       }
     },
     reset: (state) => {
       state.display = '0'
+      state.expression = '0'
     }
   },
 })

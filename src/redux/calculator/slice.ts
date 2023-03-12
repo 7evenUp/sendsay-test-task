@@ -7,12 +7,7 @@ export type dragType = {
   name: calcNames
 }
 
-const initialState: dragType[] = [
-  {id: 1, name: 'display'},
-  {id: 3, name: 'numpad'},
-  {id: 2, name: 'operators'},
-  {id: 4, name: 'equal'}
-]
+const initialState: dragType[] = []
 
 export const calculatorSlice = createSlice({
   name: 'calculator',
@@ -26,7 +21,6 @@ export const calculatorSlice = createSlice({
       state.splice(indexOfObj, 1)
     },
     update: (state, action: PayloadAction<{index: number, atIndex: number, item: dragType}>) => {
-      console.log('IN SELECTOR UPDATE | ', 'from: ', action.payload.index, 'to: ', action.payload.atIndex)
       state.splice(action.payload.atIndex,0,...state.splice(action.payload.index,1))
     }
   },

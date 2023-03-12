@@ -33,7 +33,6 @@ const Canvas = () => {
   const moveCard = useCallback(
     (name: calcNames, atIndex: number) => {
       const { card, index } = findCard(name);
-      console.log("MOVE CARD | index: ", index, ' card: ', card)
       dispatch(update({ index, atIndex, item: card }));
     },
     [findCard, calculator]
