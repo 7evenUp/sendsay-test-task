@@ -36,8 +36,15 @@ export const runtimeSlice = createSlice({
       console.log(state.expression)
     },
     calculate: (state) => {
-      state.display = eval(state.expression + state.display)
-      console.log(state.display, state.expression)
+      if (state.expression.at(-1) === '/' && state.display === '0') {
+        state.display = 'Не определено'
+        state.expression = '0'
+      } else {
+        console.log('Expression: ', state.expression)
+        console.log('Display: ', state.display)
+        state.display = eval(state.expression + state.display)
+        console.log('Display after eval: ', state.display)
+      }
     },
     reset: (state) => {
       state.display = '0'
