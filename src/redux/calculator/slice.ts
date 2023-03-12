@@ -7,12 +7,7 @@ export type dragType = {
   name: calcNames
 }
 
-const initialState: dragType[] = [
-  {id: 1, name: 'display'},
-  {id: 3, name: 'numpad'},
-  {id: 2, name: 'operators'},
-  {id: 4, name: 'equal'}
-]
+const initialState: dragType[] = []
 
 export const calculatorSlice = createSlice({
   name: 'calculator',
