@@ -31,6 +31,13 @@ export const DragCard: FC<CardProps> = memo(function Card({
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
+      end: (item, monitor) => {
+        const { name: droppedId, originalIndex } = item
+        const didDrop = monitor.didDrop()
+        if (!didDrop) {
+          moveCard(droppedId, originalIndex)
+        }
+      },
     }),
     [name, originalIndex, moveCard],
   )
@@ -51,7 +58,7 @@ export const DragCard: FC<CardProps> = memo(function Card({
 
   const opacity = isDragging ? 0 : 1
   return (
-    <div className='border border-dashed cursor-move'
+    <div className='cursor-move'
     ref={(node) => drag(drop(node))} style={{ opacity }} onDoubleClick={onDoubleClick}>
       {children}
     </div>

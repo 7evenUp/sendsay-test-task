@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import calculatorReducer from './calculator/slice'
 import modeReducer from './mode/slice'
+import runtimeReducer from './runtime/slice'
 
 const rootReducer = combineReducers({
   calculator: calculatorReducer,
-  mode: modeReducer
+  mode: modeReducer,
+  runtime: runtimeReducer,
 })
 
 export const setupStore = () => {

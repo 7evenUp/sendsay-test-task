@@ -10,6 +10,7 @@ import Operators from "./Operators";
 import DragCard from "./DragCard";
 import { useCallback } from "react";
 import { calcNames } from "../types";
+import { addExpression, addToDisplay } from "../redux/runtime/slice";
 
 const Canvas = () => {
   const calculator = useAppSelector(selectCalculator);
@@ -17,7 +18,6 @@ const Canvas = () => {
 
   const findCard = useCallback(
     (name: calcNames) => {
-      console.log('FIND CARD | name: ', name)
       const card = calculator.filter((c) => `${c.name}` === name)[0] as {
         id: number;
         name: calcNames;
@@ -69,9 +69,13 @@ const Canvas = () => {
               {item.name === "display" ? (
                 <Display />
               ) : item.name === "operators" ? (
-                <Operators />
+                <Operators onClick={(evt) => {
+                  dispatch(addExpression(evt.currentTarget.innerText))
+                }} />
               ) : item.name === "numpad" ? (
-                <Numpad />
+                <Numpad onClick={(evt) => {
+                  dispatch(addToDisplay(evt.currentTarget.innerText))
+                }} />
               ) : (
                 <Equal />
               )}
