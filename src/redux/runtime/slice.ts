@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const MAX_DISPLAY_SYMBOLS = 15
+const MAX_DISPLAY_SYMBOLS = 14
 
 export type RuntimeType = {
   display: string
@@ -21,7 +21,7 @@ export const runtimeSlice = createSlice({
     addToDisplay: (state, action: PayloadAction<string>) => {
       const isEmpty = state.display === '0'
 
-      if (state.display.length >= MAX_DISPLAY_SYMBOLS) return
+      if (state.display.length >= MAX_DISPLAY_SYMBOLS && !state.opClicked) return
 
       if (action.payload === ',') {
         if (isEmpty) state.display = '0.'
@@ -45,6 +45,9 @@ export const runtimeSlice = createSlice({
         state.expression = '0'
       } else {
         state.display = '' + eval(state.expression + state.display)
+      }
+      if (state.display.length > MAX_DISPLAY_SYMBOLS) {
+        state.display = state.display.slice(0, MAX_DISPLAY_SYMBOLS)
       }
       state.opClicked = true
     },
