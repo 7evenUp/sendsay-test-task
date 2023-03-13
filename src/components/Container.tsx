@@ -21,7 +21,7 @@ const Container = ({
   );
 
   const [_, drag, dragPreview] = useDrag(() => ({
-    type: "BOX",
+    type: "container",
     item: { id, name },
     end: (draggedItem, monitor) => {
       if (draggedItem && monitor.getDropResult()) {

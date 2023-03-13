@@ -14,7 +14,7 @@ const Button = ({
       onClick={onClick}
       className={`flex items-center justify-center py-4 w-full
                   rounded-md border border-outline active:border-iris
-                text-black text-sm font-medium leading-[15px]
+                  text-black text-sm font-medium leading-[15px]
                   ${isEqualsButton ? "py-6 bg-iris text-white" : ""}`}
     >
       {children}
