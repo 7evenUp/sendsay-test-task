@@ -7,14 +7,20 @@ export type dragType = {
   name: calcNames
 }
 
-const initialState: dragType[] = []
+const initialState: dragType[] = [
+  {id: 1, name: 'display'},
+  {id: 3, name: 'numpad'},
+  {id: 2, name: 'operators'},
+  {id: 4, name: 'equal'}
+]
 
 export const calculatorSlice = createSlice({
   name: 'calculator',
   initialState,
   reducers: {
     add: (state, action: PayloadAction<dragType>) => {
-      state.push(action.payload)
+      if (action.payload.name === 'display') state.unshift(action.payload)
+      else state.push(action.payload)
     },
     remove: (state, action: PayloadAction<number>) => {
       let indexOfObj = state.findIndex((el) => el.id === action.payload)
